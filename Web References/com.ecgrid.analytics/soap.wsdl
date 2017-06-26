@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://ecgrid.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://ecgrid.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;B&gt;#ecgrid:analytics&lt;/b&gt; is an ECGridOS™ interface into ECGrid® Interconnect Infrastructure statistics,&lt;BR&gt;consisting of the following set of .NET Web Services.&lt;BR&gt;&lt;BR&gt;For more information on ECGridOS, please visit the Official ECGridOS Website at &lt;a href='http://ecgridos.com' target=_blank&gt;http://ecgridos.com&lt;/a&gt;&lt;BR&gt;&lt;BR&gt;The complete ECGridOS Developer's Guide can be downloaded from &lt;A HREF="http://ecgridos.net/docs/" target=_blank&gt;http://ecgridos.net/docs/&lt;/A&gt;.&lt;BR&gt;&lt;BR&gt;ECGridOS Developer's Forum: &lt;a href="http://forums.ecgrid.com/forumdisplay.php?f=72" target=_blank&gt;http://forums.ecgrid.com/&lt;/a&gt;.&lt;BR&gt;&lt;BR&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;IMG SRC='http://ecmailbox.ecgrid.com/ECGridStats/ECGridTraffic.png' title='Live graph created with ECGridOS API Calls using ReportTrafficStatsPublic()'&gt;&lt;p&gt;Version v1.0 (Build 1)&lt;P&gt;© 1999-2016 &lt;A HREF="http://www.ld.com" target=_blank&gt;Loren Data Corp.&lt;/A&gt; All rights reserved.&lt;/P&gt;&lt;br&gt;</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://ecgrid.com/">
+      <s:element name="TransactionConfirm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="APIKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Event" type="tns:ConfirmationEvent" />
+            <s:element minOccurs="0" maxOccurs="1" name="SenderQualifier" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SenderId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReceiverQualifier" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReceiverId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TransactionType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TransactionId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="TransactionDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="ConfirmationEvent">
+        <s:restriction base="s:string">
+          <s:enumeration value="MailboxDelivered" />
+          <s:enumeration value="MailboxPickedUp" />
+          <s:enumeration value="Translated" />
+          <s:enumeration value="Imported" />
+          <s:enumeration value="ReadyToView" />
+          <s:enumeration value="ReadyToProcess" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="TransactionConfirmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TransactionConfirmResult" type="tns:TransStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="TransStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="Erred" />
+          <s:enumeration value="Ignored" />
+          <s:enumeration value="Pending" />
+          <s:enumeration value="Confirmed" />
+          <s:enumeration value="Duplicate" />
+          <s:enumeration value="Completed" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="TransactionConfirmByInterchangeId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="APIKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InterchangeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Event" type="tns:ConfirmationEvent" />
+            <s:element minOccurs="0" maxOccurs="1" name="TransactionId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TransactionConfirmByInterchangeIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TransactionConfirmByInterchangeIdResult" type="tns:TransStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Version">
+        <s:complexType />
+      </s:element>
+      <s:element name="VersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TransStatus" type="tns:TransStatus" />
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="TransactionConfirmSoapIn">
+    <wsdl:part name="parameters" element="tns:TransactionConfirm" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmSoapOut">
+    <wsdl:part name="parameters" element="tns:TransactionConfirmResponse" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmByInterchangeIdSoapIn">
+    <wsdl:part name="parameters" element="tns:TransactionConfirmByInterchangeId" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmByInterchangeIdSoapOut">
+    <wsdl:part name="parameters" element="tns:TransactionConfirmByInterchangeIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="VersionSoapIn">
+    <wsdl:part name="parameters" element="tns:Version" />
+  </wsdl:message>
+  <wsdl:message name="VersionSoapOut">
+    <wsdl:part name="parameters" element="tns:VersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmHttpGetIn">
+    <wsdl:part name="APIKey" type="s:string" />
+    <wsdl:part name="Event" type="s:string" />
+    <wsdl:part name="SenderQualifier" type="s:string" />
+    <wsdl:part name="SenderId" type="s:string" />
+    <wsdl:part name="ReceiverQualifier" type="s:string" />
+    <wsdl:part name="ReceiverId" type="s:string" />
+    <wsdl:part name="TransactionType" type="s:string" />
+    <wsdl:part name="TransactionId" type="s:string" />
+    <wsdl:part name="TransactionDate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmHttpGetOut">
+    <wsdl:part name="Body" element="tns:TransStatus" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmByInterchangeIdHttpGetIn">
+    <wsdl:part name="APIKey" type="s:string" />
+    <wsdl:part name="InterchangeId" type="s:string" />
+    <wsdl:part name="Event" type="s:string" />
+    <wsdl:part name="TransactionId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmByInterchangeIdHttpGetOut">
+    <wsdl:part name="Body" element="tns:TransStatus" />
+  </wsdl:message>
+  <wsdl:message name="VersionHttpGetIn" />
+  <wsdl:message name="VersionHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmHttpPostIn">
+    <wsdl:part name="APIKey" type="s:string" />
+    <wsdl:part name="Event" type="s:string" />
+    <wsdl:part name="SenderQualifier" type="s:string" />
+    <wsdl:part name="SenderId" type="s:string" />
+    <wsdl:part name="ReceiverQualifier" type="s:string" />
+    <wsdl:part name="ReceiverId" type="s:string" />
+    <wsdl:part name="TransactionType" type="s:string" />
+    <wsdl:part name="TransactionId" type="s:string" />
+    <wsdl:part name="TransactionDate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmHttpPostOut">
+    <wsdl:part name="Body" element="tns:TransStatus" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmByInterchangeIdHttpPostIn">
+    <wsdl:part name="APIKey" type="s:string" />
+    <wsdl:part name="InterchangeId" type="s:string" />
+    <wsdl:part name="Event" type="s:string" />
+    <wsdl:part name="TransactionId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TransactionConfirmByInterchangeIdHttpPostOut">
+    <wsdl:part name="Body" element="tns:TransStatus" />
+  </wsdl:message>
+  <wsdl:message name="VersionHttpPostIn" />
+  <wsdl:message name="VersionHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="_x0023_ecgrid_x003A_analytics_x0020_v1Soap">
+    <wsdl:operation name="TransactionConfirm">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">To confirm receipt of a Transaction by Sender/Receiver&lt;br/&gt;- TransactionType is standard identifier (e.g. 850, 860, ORDERS, etc.)&lt;br/&gt;- TransactionID is PO#, Invoice#, etc. and is required.</wsdl:documentation>
+      <wsdl:input message="tns:TransactionConfirmSoapIn" />
+      <wsdl:output message="tns:TransactionConfirmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TransactionConfirmByInterchangeId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">To confirm receipt of a Transaction by ECGridOS InterchangeID&lt;br/&gt;- TransactionID is PO#, Invoice#, etc. and is optional if you want to confirm all transactions in Interchange.</wsdl:documentation>
+      <wsdl:input message="tns:TransactionConfirmByInterchangeIdSoapIn" />
+      <wsdl:output message="tns:TransactionConfirmByInterchangeIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">ECGrid:Analytics Version.</wsdl:documentation>
+      <wsdl:input message="tns:VersionSoapIn" />
+      <wsdl:output message="tns:VersionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="_x0023_ecgrid_x003A_analytics_x0020_v1HttpGet">
+    <wsdl:operation name="TransactionConfirm">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">To confirm receipt of a Transaction by Sender/Receiver&lt;br/&gt;- TransactionType is standard identifier (e.g. 850, 860, ORDERS, etc.)&lt;br/&gt;- TransactionID is PO#, Invoice#, etc. and is required.</wsdl:documentation>
+      <wsdl:input message="tns:TransactionConfirmHttpGetIn" />
+      <wsdl:output message="tns:TransactionConfirmHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TransactionConfirmByInterchangeId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">To confirm receipt of a Transaction by ECGridOS InterchangeID&lt;br/&gt;- TransactionID is PO#, Invoice#, etc. and is optional if you want to confirm all transactions in Interchange.</wsdl:documentation>
+      <wsdl:input message="tns:TransactionConfirmByInterchangeIdHttpGetIn" />
+      <wsdl:output message="tns:TransactionConfirmByInterchangeIdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">ECGrid:Analytics Version.</wsdl:documentation>
+      <wsdl:input message="tns:VersionHttpGetIn" />
+      <wsdl:output message="tns:VersionHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="_x0023_ecgrid_x003A_analytics_x0020_v1HttpPost">
+    <wsdl:operation name="TransactionConfirm">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">To confirm receipt of a Transaction by Sender/Receiver&lt;br/&gt;- TransactionType is standard identifier (e.g. 850, 860, ORDERS, etc.)&lt;br/&gt;- TransactionID is PO#, Invoice#, etc. and is required.</wsdl:documentation>
+      <wsdl:input message="tns:TransactionConfirmHttpPostIn" />
+      <wsdl:output message="tns:TransactionConfirmHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TransactionConfirmByInterchangeId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">To confirm receipt of a Transaction by ECGridOS InterchangeID&lt;br/&gt;- TransactionID is PO#, Invoice#, etc. and is optional if you want to confirm all transactions in Interchange.</wsdl:documentation>
+      <wsdl:input message="tns:TransactionConfirmByInterchangeIdHttpPostIn" />
+      <wsdl:output message="tns:TransactionConfirmByInterchangeIdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">ECGrid:Analytics Version.</wsdl:documentation>
+      <wsdl:input message="tns:VersionHttpPostIn" />
+      <wsdl:output message="tns:VersionHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="_x0023_ecgrid_x003A_analytics_x0020_v1Soap" type="tns:_x0023_ecgrid_x003A_analytics_x0020_v1Soap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TransactionConfirm">
+      <soap:operation soapAction="http://ecgrid.com/TransactionConfirm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TransactionConfirmByInterchangeId">
+      <soap:operation soapAction="http://ecgrid.com/TransactionConfirmByInterchangeId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <soap:operation soapAction="http://ecgrid.com/Version" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="_x0023_ecgrid_x003A_analytics_x0020_v1Soap12" type="tns:_x0023_ecgrid_x003A_analytics_x0020_v1Soap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TransactionConfirm">
+      <soap12:operation soapAction="http://ecgrid.com/TransactionConfirm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TransactionConfirmByInterchangeId">
+      <soap12:operation soapAction="http://ecgrid.com/TransactionConfirmByInterchangeId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <soap12:operation soapAction="http://ecgrid.com/Version" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="_x0023_ecgrid_x003A_analytics_x0020_v1HttpGet" type="tns:_x0023_ecgrid_x003A_analytics_x0020_v1HttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="TransactionConfirm">
+      <http:operation location="/TransactionConfirm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TransactionConfirmByInterchangeId">
+      <http:operation location="/TransactionConfirmByInterchangeId" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <http:operation location="/Version" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="_x0023_ecgrid_x003A_analytics_x0020_v1HttpPost" type="tns:_x0023_ecgrid_x003A_analytics_x0020_v1HttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="TransactionConfirm">
+      <http:operation location="/TransactionConfirm" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TransactionConfirmByInterchangeId">
+      <http:operation location="/TransactionConfirmByInterchangeId" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <http:operation location="/Version" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="_x0023_ecgrid_x003A_analytics_x0020_v1">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;B&gt;#ecgrid:analytics&lt;/b&gt; is an ECGridOS™ interface into ECGrid® Interconnect Infrastructure statistics,&lt;BR&gt;consisting of the following set of .NET Web Services.&lt;BR&gt;&lt;BR&gt;For more information on ECGridOS, please visit the Official ECGridOS Website at &lt;a href='http://ecgridos.com' target=_blank&gt;http://ecgridos.com&lt;/a&gt;&lt;BR&gt;&lt;BR&gt;The complete ECGridOS Developer's Guide can be downloaded from &lt;A HREF="http://ecgridos.net/docs/" target=_blank&gt;http://ecgridos.net/docs/&lt;/A&gt;.&lt;BR&gt;&lt;BR&gt;ECGridOS Developer's Forum: &lt;a href="http://forums.ecgrid.com/forumdisplay.php?f=72" target=_blank&gt;http://forums.ecgrid.com/&lt;/a&gt;.&lt;BR&gt;&lt;BR&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;IMG SRC='http://ecmailbox.ecgrid.com/ECGridStats/ECGridTraffic.png' title='Live graph created with ECGridOS API Calls using ReportTrafficStatsPublic()'&gt;&lt;p&gt;Version v1.0 (Build 1)&lt;P&gt;© 1999-2016 &lt;A HREF="http://www.ld.com" target=_blank&gt;Loren Data Corp.&lt;/A&gt; All rights reserved.&lt;/P&gt;&lt;br&gt;</wsdl:documentation>
+    <wsdl:port name="_x0023_ecgrid_x003A_analytics_x0020_v1Soap" binding="tns:_x0023_ecgrid_x003A_analytics_x0020_v1Soap">
+      <soap:address location="https://analytics.ecgrid.com/soap.asmx" />
+    </wsdl:port>
+    <wsdl:port name="_x0023_ecgrid_x003A_analytics_x0020_v1Soap12" binding="tns:_x0023_ecgrid_x003A_analytics_x0020_v1Soap12">
+      <soap12:address location="https://analytics.ecgrid.com/soap.asmx" />
+    </wsdl:port>
+    <wsdl:port name="_x0023_ecgrid_x003A_analytics_x0020_v1HttpGet" binding="tns:_x0023_ecgrid_x003A_analytics_x0020_v1HttpGet">
+      <http:address location="https://analytics.ecgrid.com/soap.asmx" />
+    </wsdl:port>
+    <wsdl:port name="_x0023_ecgrid_x003A_analytics_x0020_v1HttpPost" binding="tns:_x0023_ecgrid_x003A_analytics_x0020_v1HttpPost">
+      <http:address location="https://analytics.ecgrid.com/soap.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
